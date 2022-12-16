@@ -4,9 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
-      - 'release/*'
-      - 'feature/*'
+      - main
     tags:
       - '*'
 
@@ -30,7 +28,8 @@ jobs:
       with:
         node-version: ${{ matrix.version }}
 
-    - run: npm install
+    - name: Run npm install on platform = ${{ matrix.platform }} node = ${{ matrix.version }}
+      run: cd matrix-strategy/nodejs && npm install
 
-    - name: Running on Platform = ${{ matrix.platform }} Node = ${{ matrix.version }}
+    - name: Testing on platform = ${{ matrix.platform }} node = ${{ matrix.version }}
       run: cd matrix-strategy/nodejs && npm test
